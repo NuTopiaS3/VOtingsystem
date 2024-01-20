@@ -1,0 +1,595 @@
+<LoginScreen>:
+    name: 'log'
+    canvas:
+        Rectangle:
+            source: 'D:/Gugan/VOting system/bg.jpg'
+            size: self.size
+    MDCard:
+        id:bg
+        md_bg_color: "white"
+        size_hint_x:0.336
+        size_hint_y:0.6
+        pos_hint: {'center_x': 0.5 ,'center_y': 0.5}
+
+    MDTextField:
+        id: user
+        hint_text: 'User Name'
+        size_hint_x: 0.3
+        pos_hint:{'center_x': 0.5 ,'center_y': 0.6}
+        line_color_normal: 0,205/255,1,1
+        hint_text_color_normal: 0,205/255,1,1
+
+    MDTextField:
+        id: passw
+        hint_text: 'Password'
+        helper_text: 'Your Adm No. '
+        size_hint_x: 0.3
+        pos_hint:{'center_x': 0.5 ,'center_y': 0.48}
+        line_color_normal: 0,205/255,1,1
+        hint_text_color_normal: 0,205/255,1,1
+        password: True
+
+    MDRoundFlatButton:
+        text: 'Login'
+        pos_hint:{'center_x': 0.5 ,'center_y': 0.33}
+        size_hint_x: 0.15
+        on_release: app.login(user, passw,error)
+
+    Label:
+        id: error
+        text: ''
+        color: 1,0,0,1
+        pos_hint:{'center_x': 0.5 ,'center_y': 0.27}
+
+        
+<PrefectgScreen>:
+    name: 'votepg'
+    canvas:
+        Rectangle:
+            source: 'D:/Gugan/VOting system/bg.jpg'
+            size: self.size 
+
+    Label:
+        text: 'Girl Prefect'
+        pos_hint: {'center_x':0.5,'center_y':0.88}
+        font_size: 72
+        bold: True
+    Label:
+        text:'NAME'
+        pos_hint: {'center_x':0.0875,'center_y':0.38}
+        color:0,0,1,1
+
+    Label:
+        text:'NAME'
+        pos_hint: {'center_x':0.3625,'center_y':0.38}
+        color:0,0,1,1
+
+    Label:
+        text:'NAME'
+        pos_hint: {'center_x':0.6375,'center_y':0.38}
+        color:0,0,1,1
+
+    Label:
+        text:'NAME'
+        pos_hint: {'center_x':0.9125,'center_y':0.38}
+        color:0,0,1,1        
+
+    Image:
+        source: 'D:/Gugan/VOting system/img.png'
+        size_hint_x:0.175
+        size_hint_y:0.17
+        pos_hint: {'center_x':0.0875,'center_y':0.49}
+
+    Image:
+        source: 'D:/Gugan/VOting system/img.png'
+        size_hint_x:0.175
+        size_hint_y:0.17
+        pos_hint: {'center_x':0.3625,'center_y':0.49}
+
+    Image:
+        source: 'D:/Gugan/VOting system/img.png'
+        size_hint_x:0.175
+        size_hint_y:0.17
+        pos_hint: {'center_x':0.6375,'center_y':0.49}
+
+    Image:
+        source: 'D:/Gugan/VOting system/img.png'
+        size_hint_x:0.175
+        size_hint_y:0.17
+        pos_hint: {'center_x':0.9125,'center_y':0.49}
+
+    MDRaisedButton:
+        id: but
+        text: 'VOTE'
+        pos_hint: {'center_x':0.0875,'center_y':0.331}
+        size_hint_x:0.175
+        opacity: 1  
+        on_press: app.pgcontv1()
+        disabled: False
+
+    MDRaisedButton:
+        id: but1
+        text: 'VOTE'
+        pos_hint: {'center_x':0.3625,'center_y':0.331}
+        size_hint_x:0.175
+        opacity: 1 
+        on_press: app.pgcontv2()
+        disabled: False
+
+    MDRaisedButton:
+        id: but2
+        text: 'VOTE'
+        pos_hint: {'center_x':0.6375,'center_y':0.331}
+        size_hint_x:0.175
+        opacity: 1
+        on_press: app.pgcontv3()
+        disabled: False
+
+    MDRaisedButton:
+        id: but2
+        text: 'VOTE'
+        pos_hint: {'center_x':0.9125,'center_y':0.331}
+        size_hint_x:0.175
+        opacity: 1
+        on_press: app.pgcontv4()
+        disabled: False   
+        
+<PrefectScreen>:
+    name: 'votepb'
+    canvas:
+        Rectangle:
+            source: 'D:/Gugan/VOting system/bg.jpg'
+            size: self.size 
+
+    Label:
+        text: 'Boy Prefect'
+        pos_hint: {'center_x':0.5,'center_y':0.88}
+        font_size: 72
+        bold: True
+    Label:
+        text:'NAME'
+        pos_hint: {'center_x':0.18,'center_y':0.38}
+        color:0,0,1,1
+
+    Label:
+        text:'NAME'
+        pos_hint: {'center_x':0.5,'center_y':0.38}
+        color:0,0,1,1
+
+    Label:
+        text:'NAME'
+        pos_hint: {'center_x':0.82,'center_y':0.38}
+        color:0,0,1,1
+
+    Image:
+        source: 'D:/Gugan/VOting system/img.png'
+        size_hint_x:0.18
+        size_hint_y:0.17
+        pos_hint: {'center_x':0.18,'center_y':0.49}
+
+    Image:
+        source: 'D:/Gugan/VOting system/img.png'
+        size_hint_x:0.18
+        size_hint_y:0.17
+        pos_hint: {'center_x':0.5,'center_y':0.49}
+
+    Image:
+        source: 'D:/Gugan/VOting system/img.png'
+        size_hint_x:0.18
+        size_hint_y:0.17
+        pos_hint: {'center_x':0.82,'center_y':0.49}
+
+    MDRaisedButton:
+        id: but
+        text: 'VOTE'
+        pos_hint: {'center_x':0.18,'center_y':0.331}
+        size_hint_x:0.18
+        opacity: 1  
+        on_press: app.pbcontv1()
+        disabled: False
+
+    MDRaisedButton:
+        id: but1
+        text: 'VOTE'
+        pos_hint: {'center_x':0.5,'center_y':0.331}
+        size_hint_x:0.18
+        opacity: 1 
+        on_press: app.pbcontv2()
+        disabled: False
+
+    MDRaisedButton:
+        id: but2
+        text: 'VOTE'
+        pos_hint: {'center_x':0.82,'center_y':0.331}
+        size_hint_x:0.18
+        opacity: 1
+        on_press: app.pbcontv3()
+        disabled: False   
+
+<StudentScreen>:
+    name: 'votes'
+    canvas:
+        Rectangle:
+            source: 'D:/Gugan/VOting system/bg.jpg'
+            size: self.size 
+
+            
+    Label:
+        text: 'Student Council'
+        pos_hint: {'center_x':0.5,'center_y':0.88}
+        font_size: 72
+        bold: True
+
+    Label:
+        text:'NAME'
+        pos_hint: {'center_x':0.18,'center_y':0.38}
+        color:0,0,1,1
+
+    Label:
+        text:'NAME'
+        pos_hint: {'center_x':0.5,'center_y':0.38}
+        color:0,0,1,1
+
+    Label:
+        text:'NAME'
+        pos_hint: {'center_x':0.82,'center_y':0.38}
+        color:0,0,1,1
+
+    Image:
+        source: 'D:/Gugan/VOting system/img.png'
+        size_hint_x:0.18
+        size_hint_y:0.17
+        pos_hint: {'center_x':0.18,'center_y':0.49}
+
+    Image:
+        source: 'D:/Gugan/VOting system/img.png'
+        size_hint_x:0.18
+        size_hint_y:0.17
+        pos_hint: {'center_x':0.5,'center_y':0.49}
+
+    Image:
+        source: 'D:/Gugan/VOting system/img.png'
+        size_hint_x:0.18
+        size_hint_y:0.17
+        pos_hint: {'center_x':0.82,'center_y':0.49}
+
+    MDRaisedButton:
+        id: but
+        text: 'VOTE'
+        pos_hint: {'center_x':0.18,'center_y':0.331}
+        size_hint_x:0.18
+        opacity: 1  
+        on_press: app.scontv1()
+        disabled: False
+
+    MDRaisedButton:
+        id: but1
+        text: 'VOTE'
+        pos_hint: {'center_x':0.5,'center_y':0.331}
+        size_hint_x:0.18
+        opacity: 1 
+        on_press: app.scontv2()
+        disabled: False
+
+    MDRaisedButton:
+        id: but2
+        text: 'VOTE'
+        pos_hint: {'center_x':0.82,'center_y':0.331}
+        size_hint_x:0.18
+        opacity: 1
+        on_press: app.scontv3()
+        disabled: False
+
+<Maple>:
+    name: 'maple'
+    canvas:
+        Rectangle:
+            source: 'D:/Gugan/VOting system/bg.jpg'
+            size: self.size 
+
+    Label:
+        text: 'Maple Vice Captain'
+        pos_hint: {'center_x':0.5,'center_y':0.88}
+        font_size: 72
+        bold: True
+
+    Label:
+        text:'NAME'
+        pos_hint: {'center_x':0.18,'center_y':0.38}
+        color:0,0,1,1
+
+    Label:
+        text:'NAME'
+        pos_hint: {'center_x':0.5,'center_y':0.38}
+        color:0,0,1,1
+
+    Label:
+        text:'NAME'
+        pos_hint: {'center_x':0.82,'center_y':0.38}
+        color:0,0,1,1
+
+    Image:
+        source: 'D:/Gugan/VOting system/img.png'
+        size_hint_x:0.18
+        size_hint_y:0.17
+        pos_hint: {'center_x':0.18,'center_y':0.49}
+
+    Image:
+        source: 'D:/Gugan/VOting system/img.png'
+        size_hint_x:0.18
+        size_hint_y:0.17
+        pos_hint: {'center_x':0.5,'center_y':0.49}
+
+    Image:
+        source: 'D:/Gugan/VOting system/img.png'
+        size_hint_x:0.18
+        size_hint_y:0.17
+        pos_hint: {'center_x':0.82,'center_y':0.49}
+
+    MDRaisedButton:
+        id: but
+        text: 'VOTE'
+        pos_hint: {'center_x':0.18,'center_y':0.331}
+        size_hint_x:0.18
+        opacity: 1  
+        on_press: app.mcontv1()
+        disabled: False
+
+    MDRaisedButton:
+        id: but1
+        text: 'VOTE'
+        pos_hint: {'center_x':0.5,'center_y':0.331}
+        size_hint_x:0.18
+        opacity: 1 
+        on_press: app.mcontv2()
+        disabled: False
+
+    MDRaisedButton:
+        id: but2
+        text: 'VOTE'
+        pos_hint: {'center_x':0.82,'center_y':0.331}
+        size_hint_x:0.18
+        opacity: 1
+        on_press: app.mcontv3()
+        disabled: False
+
+<Cedar>:
+    name: 'cedar'
+    canvas:
+        Rectangle:
+            source: 'D:/Gugan/VOting system/bg.jpg'
+            size: self.size 
+
+    Label:
+        text: 'Cedar Vice Captain'
+        pos_hint: {'center_x':0.5,'center_y':0.88}
+        font_size: 72
+        bold: True
+
+    Label:
+        text:'NAME'
+        pos_hint: {'center_x':0.18,'center_y':0.38}
+        color:0,0,1,1
+
+    Label:
+        text:'NAME'
+        pos_hint: {'center_x':0.5,'center_y':0.38}
+        color:0,0,1,1
+
+    Label:
+        text:'NAME'
+        pos_hint: {'center_x':0.82,'center_y':0.38}
+        color:0,0,1,1
+
+    Image:
+        source: 'D:/Gugan/VOting system/img.png'
+        size_hint_x:0.18
+        size_hint_y:0.17
+        pos_hint: {'center_x':0.18,'center_y':0.49}
+
+    Image:
+        source: 'D:/Gugan/VOting system/img.png'
+        size_hint_x:0.18
+        size_hint_y:0.17
+        pos_hint: {'center_x':0.5,'center_y':0.49}
+
+    Image:
+        source: 'D:/Gugan/VOting system/img.png'
+        size_hint_x:0.18
+        size_hint_y:0.17
+        pos_hint: {'center_x':0.82,'center_y':0.49}
+
+    MDRaisedButton:
+        id: but
+        text: 'VOTE'
+        pos_hint: {'center_x':0.18,'center_y':0.331}
+        size_hint_x:0.18
+        opacity: 1  
+        on_press: app.ccontv1()
+        disabled: False
+
+    MDRaisedButton:
+        id: but1
+        text: 'VOTE'
+        pos_hint: {'center_x':0.5,'center_y':0.331}
+        size_hint_x:0.18
+        opacity: 1 
+        on_press: app.ccontv2()
+        disabled: False
+
+    MDRaisedButton:
+        id: but2
+        text: 'VOTE'
+        pos_hint: {'center_x':0.82,'center_y':0.331}
+        size_hint_x:0.18
+        opacity: 1
+        on_press: app.ccontv3()
+        disabled: False
+
+<Oak>:
+    name: 'oak'
+    canvas:
+        Rectangle:
+            source: 'D:/Gugan/VOting system/bg.jpg'
+            size: self.size 
+
+    Label:
+        text: 'Oak Captain'
+        pos_hint: {'center_x':0.5,'center_y':0.88}
+        font_size: 72
+        bold: True
+
+    Label:
+        text:'NAME'
+        pos_hint: {'center_x':0.3033,'center_y':0.38}
+        color:0,0,1,1
+
+
+    Label:
+        text:'NAME'
+        pos_hint: {'center_x':0.6075,'center_y':0.38}
+        color:0,0,1,1
+
+    Image:
+        source: 'D:/Gugan/VOting system/img.png'
+        size_hint_x:0.18
+        size_hint_y:0.17
+        pos_hint: {'center_x':0.3033,'center_y':0.49}
+
+
+    Image:
+        source: 'D:/Gugan/VOting system/img.png'
+        size_hint_x:0.18
+        size_hint_y:0.17
+        pos_hint: {'center_x':0.6075,'center_y':0.49}
+
+    MDRaisedButton:
+        id: but
+        text: 'VOTE'
+        pos_hint: {'center_x':0.3033,'center_y':0.331}
+        size_hint_x:0.18
+        opacity: 1  
+        on_press: app.ocontv1()
+        disabled: False
+
+
+    MDRaisedButton:
+        id: but2
+        text: 'VOTE'
+        pos_hint: {'center_x':0.6075,'center_y':0.331}
+        size_hint_x:0.18
+        opacity: 1
+        on_press: app.ocontv3()
+        disabled: False
+
+<Pinec>:
+    name: 'pinec'
+    canvas:
+        Rectangle:
+            source: 'D:/Gugan/VOting system/bg.jpg'
+            size: self.size 
+
+    Label:
+        text: 'Pine Captain'
+        pos_hint: {'center_x':0.5,'center_y':0.88}
+        font_size: 72
+        bold: True
+
+    Label:
+        text:'NAME'
+        pos_hint: {'center_x':0.3033,'center_y':0.38}
+        color:0,0,1,1
+
+
+    Label:
+        text:'NAME'
+        pos_hint: {'center_x':0.6075,'center_y':0.38}
+        color:0,0,1,1
+
+    Image:
+        source: 'D:/Gugan/VOting system/img.png'
+        size_hint_x:0.18
+        size_hint_y:0.17
+        pos_hint: {'center_x':0.3033,'center_y':0.49}
+
+
+    Image:
+        source: 'D:/Gugan/VOting system/img.png'
+        size_hint_x:0.18
+        size_hint_y:0.17
+        pos_hint: {'center_x':0.6075,'center_y':0.49}
+
+    MDRaisedButton:
+        id: but
+        text: 'VOTE'
+        pos_hint: {'center_x':0.3033,'center_y':0.331}
+        size_hint_x:0.18
+        opacity: 1  
+        on_press: app.pccontv1()
+        disabled: False
+
+
+    MDRaisedButton:
+        id: but2
+        text: 'VOTE'
+        pos_hint: {'center_x':0.6075,'center_y':0.331}
+        size_hint_x:0.18
+        opacity: 1
+        on_press: app.pccontv2()
+        disabled: False
+
+<Pinev>:
+    name: 'pinev'
+    canvas:
+        Rectangle:
+            source: 'D:/Gugan/VOting system/bg.jpg'
+            size: self.size 
+
+    Label:
+        text: 'Pine Vice Captain'
+        pos_hint: {'center_x':0.5,'center_y':0.88}
+        font_size: 72
+        bold: True
+
+    Label:
+        text:'NAME'
+        pos_hint: {'center_x':0.3033,'center_y':0.38}
+        color:0,0,1,1
+
+
+    Label:
+        text:'NAME'
+        pos_hint: {'center_x':0.6075,'center_y':0.38}
+        color:0,0,1,1
+
+    Image:
+        source: 'D:/Gugan/VOting system/img.png'
+        size_hint_x:0.18
+        size_hint_y:0.17
+        pos_hint: {'center_x':0.3033,'center_y':0.49}
+
+
+    Image:
+        source: 'D:/Gugan/VOting system/img.png'
+        size_hint_x:0.18
+        size_hint_y:0.17
+        pos_hint: {'center_x':0.6075,'center_y':0.49}
+
+    MDRaisedButton:
+        id: but
+        text: 'VOTE'
+        pos_hint: {'center_x':0.3033,'center_y':0.331}
+        size_hint_x:0.18
+        opacity: 1  
+        on_press: app.pvcontv1()
+        disabled: False
+
+
+    MDRaisedButton:
+        id: but2
+        text: 'VOTE'
+        pos_hint: {'center_x':0.6075,'center_y':0.331}
+        size_hint_x:0.18
+        opacity: 1
+        on_press: app.pvcontv2()
+        disabled: False
