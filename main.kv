@@ -1,3 +1,10 @@
+# Header Sample - #HS
+#    Label:
+#        text: 'Girl Prefect'
+#        pos_hint: {'center_x':0.5,'center_y':0.88}
+#        font_size: 72
+#        bold: True
+
 <LoginScreen>:
     name: 'log'
     canvas:
@@ -41,38 +48,34 @@
         color: 1,0,0,1
         pos_hint:{'center_x': 0.5 ,'center_y': 0.27}
 
-        
+
 <PrefectgScreen>:
     name: 'votepg'
     canvas:
         Rectangle:
-            source: 'D:/Gugan/VOting system/bg.jpg'
-            size: self.size 
+            source: 'D:/Gugan/VOting system/gp.jpg'
+            size: self.size
 
-    Label:
-        text: 'Girl Prefect'
-        pos_hint: {'center_x':0.5,'center_y':0.88}
-        font_size: 72
-        bold: True
+    #HS
     Label:
         text:'NAME'
         pos_hint: {'center_x':0.0875,'center_y':0.38}
-        color:0,0,1,1
+        color:0,0,0,1
 
     Label:
         text:'NAME'
         pos_hint: {'center_x':0.3625,'center_y':0.38}
-        color:0,0,1,1
+        color:0,0,0,1
 
     Label:
         text:'NAME'
         pos_hint: {'center_x':0.6375,'center_y':0.38}
-        color:0,0,1,1
+        color:0,0,0,1
 
     Label:
         text:'NAME'
         pos_hint: {'center_x':0.9125,'center_y':0.38}
-        color:0,0,1,1        
+        color:0,0,0,1
 
     Image:
         source: 'D:/Gugan/VOting system/img.png'
@@ -100,66 +103,63 @@
 
     MDRaisedButton:
         id: but
+        ##source:
         text: 'VOTE'
         pos_hint: {'center_x':0.0875,'center_y':0.331}
-        size_hint_x:0.175
-        opacity: 1  
-        on_press: app.pgcontv1()
-        disabled: False
+        size_hint_x:0.15
+        on_press: app.prefect_girl_cont1()
+        md_bg_color: "#FB313E"
 
     MDRaisedButton:
         id: but1
+        ##source:
         text: 'VOTE'
         pos_hint: {'center_x':0.3625,'center_y':0.331}
-        size_hint_x:0.175
-        opacity: 1 
-        on_press: app.pgcontv2()
-        disabled: False
+        size_hint_x:0.15
+        on_press: app.prefect_girl_cont2()
+        md_bg_color: "#FB313E"
 
     MDRaisedButton:
         id: but2
         text: 'VOTE'
         pos_hint: {'center_x':0.6375,'center_y':0.331}
-        size_hint_x:0.175
+        size_hint_x:0.15
         opacity: 1
-        on_press: app.pgcontv3()
+        on_press: app.prefect_girl_cont3()
         disabled: False
+        md_bg_color: "#FB313E"
 
     MDRaisedButton:
         id: but2
         text: 'VOTE'
         pos_hint: {'center_x':0.9125,'center_y':0.331}
-        size_hint_x:0.175
+        size_hint_x:0.15
         opacity: 1
-        on_press: app.pgcontv4()
-        disabled: False   
-        
+        on_press: app.prefect_girl_cont4()
+        disabled: False
+        md_bg_color: "#FB313E"
 <PrefectScreen>:
     name: 'votepb'
     canvas:
         Rectangle:
-            source: 'D:/Gugan/VOting system/bg.jpg'
-            size: self.size 
+            source: 'D:/Gugan/VOting system/bp.jpg'
+            size: self.size
 
-    Label:
-        text: 'Boy Prefect'
-        pos_hint: {'center_x':0.5,'center_y':0.88}
-        font_size: 72
-        bold: True
+    #HS
     Label:
         text:'NAME'
         pos_hint: {'center_x':0.18,'center_y':0.38}
-        color:0,0,1,1
+        color:0,0,0,1
 
     Label:
         text:'NAME'
         pos_hint: {'center_x':0.5,'center_y':0.38}
-        color:0,0,1,1
+        color:0,0,0,1
 
     Label:
         text:'NAME'
         pos_hint: {'center_x':0.82,'center_y':0.38}
-        color:0,0,1,1
+        color:0,0,0,1
 
     Image:
         source: 'D:/Gugan/VOting system/img.png'
@@ -183,57 +183,54 @@
         id: but
         text: 'VOTE'
         pos_hint: {'center_x':0.18,'center_y':0.331}
-        size_hint_x:0.18
-        opacity: 1  
-        on_press: app.pbcontv1()
+        size_hint_x:0.15
+        opacity: 1
+        on_press: app.prefect_boy_cont1()
         disabled: False
-
+        md_bg_color: "#FB313E"
     MDRaisedButton:
         id: but1
         text: 'VOTE'
         pos_hint: {'center_x':0.5,'center_y':0.331}
-        size_hint_x:0.18
-        opacity: 1 
-        on_press: app.pbcontv2()
+        size_hint_x:0.15
+        opacity: 1
+        on_press: app.prefect_boy_cont2()
         disabled: False
-
+        md_bg_color: "#FB313E"
     MDRaisedButton:
         id: but2
         text: 'VOTE'
         pos_hint: {'center_x':0.82,'center_y':0.331}
-        size_hint_x:0.18
+        size_hint_x:0.15
         opacity: 1
-        on_press: app.pbcontv3()
-        disabled: False   
-
+        on_press: app.prefect_boy_cont3()
+        disabled: False
+        md_bg_color: "#FB313E"
 <StudentScreen>:
     name: 'votes'
     canvas:
         Rectangle:
-            source: 'D:/Gugan/VOting system/bg.jpg'
-            size: self.size 
+            source: 'D:/Gugan/VOting system/scp.jpg'
+            size: self.size
 
-            
-    Label:
-        text: 'Student Council'
-        pos_hint: {'center_x':0.5,'center_y':0.88}
-        font_size: 72
-        bold: True
+
+    #HS
+
 
     Label:
         text:'NAME'
         pos_hint: {'center_x':0.18,'center_y':0.38}
-        color:0,0,1,1
+        color:0,0,0,1
 
     Label:
         text:'NAME'
         pos_hint: {'center_x':0.5,'center_y':0.38}
-        color:0,0,1,1
+        color:0,0,0,1
 
     Label:
         text:'NAME'
         pos_hint: {'center_x':0.82,'center_y':0.38}
-        color:0,0,1,1
+        color:0,0,0,1
 
     Image:
         source: 'D:/Gugan/VOting system/img.png'
@@ -257,56 +254,51 @@
         id: but
         text: 'VOTE'
         pos_hint: {'center_x':0.18,'center_y':0.331}
-        size_hint_x:0.18
-        opacity: 1  
-        on_press: app.scontv1()
+        size_hint_x:0.15
+        opacity: 1
+        on_press: app.student_council_cont1()
         disabled: False
-
+        md_bg_color: "#FB313E"
     MDRaisedButton:
         id: but1
         text: 'VOTE'
         pos_hint: {'center_x':0.5,'center_y':0.331}
-        size_hint_x:0.18
-        opacity: 1 
-        on_press: app.scontv2()
+        size_hint_x:0.15
+        opacity: 1
+        on_press: app.student_council_cont2()
         disabled: False
-
+        md_bg_color: "#FB313E"
     MDRaisedButton:
         id: but2
         text: 'VOTE'
         pos_hint: {'center_x':0.82,'center_y':0.331}
-        size_hint_x:0.18
+        size_hint_x:0.15
         opacity: 1
-        on_press: app.scontv3()
+        on_press: app.student_council_cont3()
         disabled: False
-
+        md_bg_color: "#FB313E"
 <Maple>:
     name: 'maple'
     canvas:
         Rectangle:
-            source: 'D:/Gugan/VOting system/bg.jpg'
-            size: self.size 
+            source: 'D:/Gugan/VOting system/mc.jpg'
+            size: self.size
 
-    Label:
-        text: 'Maple Vice Captain'
-        pos_hint: {'center_x':0.5,'center_y':0.88}
-        font_size: 72
-        bold: True
-
+    #HS
     Label:
         text:'NAME'
         pos_hint: {'center_x':0.18,'center_y':0.38}
-        color:0,0,1,1
+        color:0,0,0,1
 
     Label:
         text:'NAME'
         pos_hint: {'center_x':0.5,'center_y':0.38}
-        color:0,0,1,1
+        color:0,0,0,1
 
     Label:
         text:'NAME'
         pos_hint: {'center_x':0.82,'center_y':0.38}
-        color:0,0,1,1
+        color:0,0,0,1
 
     Image:
         source: 'D:/Gugan/VOting system/img.png'
@@ -330,56 +322,52 @@
         id: but
         text: 'VOTE'
         pos_hint: {'center_x':0.18,'center_y':0.331}
-        size_hint_x:0.18
-        opacity: 1  
-        on_press: app.mcontv1()
+        size_hint_x:0.15
+        opacity: 1
+        on_press: app.maple_captain_cont1()
         disabled: False
-
+        md_bg_color: "#FB313E"
     MDRaisedButton:
         id: but1
         text: 'VOTE'
         pos_hint: {'center_x':0.5,'center_y':0.331}
-        size_hint_x:0.18
-        opacity: 1 
-        on_press: app.mcontv2()
+        size_hint_x:0.15
+        opacity: 1
+        on_press: app.maple_captain_cont2()
         disabled: False
-
+        md_bg_color: "#FB313E"
     MDRaisedButton:
         id: but2
         text: 'VOTE'
         pos_hint: {'center_x':0.82,'center_y':0.331}
-        size_hint_x:0.18
+        size_hint_x:0.15
         opacity: 1
-        on_press: app.mcontv3()
+        on_press: app.maple_captain_cont3()
         disabled: False
-
+        md_bg_color: "#FB313E"
 <Cedar>:
     name: 'cedar'
     canvas:
         Rectangle:
-            source: 'D:/Gugan/VOting system/bg.jpg'
-            size: self.size 
+            source: 'D:/Gugan/VOting system/cc.jpg'
+            size: self.size
 
-    Label:
-        text: 'Cedar Vice Captain'
-        pos_hint: {'center_x':0.5,'center_y':0.88}
-        font_size: 72
-        bold: True
+    #HS
 
     Label:
         text:'NAME'
         pos_hint: {'center_x':0.18,'center_y':0.38}
-        color:0,0,1,1
+        color:0,0,0,1
 
     Label:
         text:'NAME'
         pos_hint: {'center_x':0.5,'center_y':0.38}
-        color:0,0,1,1
+        color:0,0,0,1
 
     Label:
         text:'NAME'
         pos_hint: {'center_x':0.82,'center_y':0.38}
-        color:0,0,1,1
+        color:0,0,0,1
 
     Image:
         source: 'D:/Gugan/VOting system/img.png'
@@ -403,52 +391,48 @@
         id: but
         text: 'VOTE'
         pos_hint: {'center_x':0.18,'center_y':0.331}
-        size_hint_x:0.18
-        opacity: 1  
-        on_press: app.ccontv1()
+        size_hint_x:0.15
+        opacity: 1
+        on_press: app.cedar_captain_cont1()
         disabled: False
-
+        md_bg_color: "#FB313E"
     MDRaisedButton:
         id: but1
         text: 'VOTE'
         pos_hint: {'center_x':0.5,'center_y':0.331}
-        size_hint_x:0.18
-        opacity: 1 
-        on_press: app.ccontv2()
+        size_hint_x:0.15
+        opacity: 1
+        on_press: app.cedar_captain_cont2()
         disabled: False
-
+        md_bg_color: "#FB313E"
     MDRaisedButton:
         id: but2
         text: 'VOTE'
         pos_hint: {'center_x':0.82,'center_y':0.331}
-        size_hint_x:0.18
+        size_hint_x:0.15
         opacity: 1
-        on_press: app.ccontv3()
+        on_press: app.cedar_captain_cont3()
         disabled: False
-
+        md_bg_color: "#FB313E"
 <Oak>:
     name: 'oak'
     canvas:
         Rectangle:
-            source: 'D:/Gugan/VOting system/bg.jpg'
-            size: self.size 
+            source: 'D:/Gugan/VOting system/oc.jpg'
+            size: self.size
 
-    Label:
-        text: 'Oak Captain'
-        pos_hint: {'center_x':0.5,'center_y':0.88}
-        font_size: 72
-        bold: True
+    #HS
 
     Label:
         text:'NAME'
         pos_hint: {'center_x':0.3033,'center_y':0.38}
-        color:0,0,1,1
+        color:0,0,0,1
 
 
     Label:
         text:'NAME'
         pos_hint: {'center_x':0.6075,'center_y':0.38}
-        color:0,0,1,1
+        color:0,0,0,1
 
     Image:
         source: 'D:/Gugan/VOting system/img.png'
@@ -467,44 +451,41 @@
         id: but
         text: 'VOTE'
         pos_hint: {'center_x':0.3033,'center_y':0.331}
-        size_hint_x:0.18
-        opacity: 1  
-        on_press: app.ocontv1()
+        size_hint_x:0.15
+        opacity: 1
+        on_press: app.oak_captain_cont1()
         disabled: False
+        md_bg_color: "#FB313E"
+
 
 
     MDRaisedButton:
         id: but2
         text: 'VOTE'
         pos_hint: {'center_x':0.6075,'center_y':0.331}
-        size_hint_x:0.18
+        size_hint_x:0.15
         opacity: 1
-        on_press: app.ocontv3()
+        on_press: app.oak_captain_cont3()
         disabled: False
-
+        md_bg_color: "#FB313E"
 <Pinec>:
     name: 'pinec'
     canvas:
         Rectangle:
-            source: 'D:/Gugan/VOting system/bg.jpg'
-            size: self.size 
+            source: 'D:/Gugan/VOting system/pc.jpg'
+            size: self.size
 
-    Label:
-        text: 'Pine Captain'
-        pos_hint: {'center_x':0.5,'center_y':0.88}
-        font_size: 72
-        bold: True
-
+    #HS
     Label:
         text:'NAME'
         pos_hint: {'center_x':0.3033,'center_y':0.38}
-        color:0,0,1,1
+        color:0,0,0,1
 
 
     Label:
         text:'NAME'
         pos_hint: {'center_x':0.6075,'center_y':0.38}
-        color:0,0,1,1
+        color:0,0,0,1
 
     Image:
         source: 'D:/Gugan/VOting system/img.png'
@@ -523,44 +504,40 @@
         id: but
         text: 'VOTE'
         pos_hint: {'center_x':0.3033,'center_y':0.331}
-        size_hint_x:0.18
-        opacity: 1  
-        on_press: app.pccontv1()
+        size_hint_x:0.15
+        opacity: 1
+        on_press: app.pine_captain_cont1()
         disabled: False
+        md_bg_color: "#FB313E"
 
 
     MDRaisedButton:
         id: but2
         text: 'VOTE'
         pos_hint: {'center_x':0.6075,'center_y':0.331}
-        size_hint_x:0.18
+        size_hint_x:0.15
         opacity: 1
-        on_press: app.pccontv2()
+        on_press: app.pine_captain_cont2()
         disabled: False
-
+        md_bg_color: "#FB313E"
 <Pinev>:
     name: 'pinev'
     canvas:
         Rectangle:
-            source: 'D:/Gugan/VOting system/bg.jpg'
-            size: self.size 
+            source: 'D:/Gugan/VOting system/pvc.jpg'
+            size: self.size
 
-    Label:
-        text: 'Pine Vice Captain'
-        pos_hint: {'center_x':0.5,'center_y':0.88}
-        font_size: 72
-        bold: True
-
+    #HS
     Label:
         text:'NAME'
         pos_hint: {'center_x':0.3033,'center_y':0.38}
-        color:0,0,1,1
+        color:0,0,0,1
 
 
     Label:
         text:'NAME'
         pos_hint: {'center_x':0.6075,'center_y':0.38}
-        color:0,0,1,1
+        color:0,0,0,1
 
     Image:
         source: 'D:/Gugan/VOting system/img.png'
@@ -579,17 +556,18 @@
         id: but
         text: 'VOTE'
         pos_hint: {'center_x':0.3033,'center_y':0.331}
-        size_hint_x:0.18
-        opacity: 1  
-        on_press: app.pvcontv1()
+        size_hint_x:0.15
+        opacity: 1
+        on_press: app.pine_vc_cont1()
         disabled: False
-
+        md_bg_color: "#FB313E"
 
     MDRaisedButton:
         id: but2
         text: 'VOTE'
         pos_hint: {'center_x':0.6075,'center_y':0.331}
-        size_hint_x:0.18
+        size_hint_x:0.15
         opacity: 1
-        on_press: app.pvcontv2()
+        on_press: app.pine_vc_cont2()
         disabled: False
+        md_bg_color: "#FB313E"
