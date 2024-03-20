@@ -54,10 +54,14 @@ class Pinec(Screen):
 
 class Pinev(Screen):
     pass
-kv1 = Builder.load_file('D:/Gugan/VOting system/main.kv')
+kv1 = "C:/Users/Admin/VOtingsystem/main.kv"
 
 class MainApp(MDApp):
     current_admin_house = ''
+    def Bld(fn):
+        dir= "C:/Users/Admin/VOtingsystem/Images/"
+        fp = os.path.join(dir, fn)
+        return fp
     def build(self):
         self.sc = ScreenManager()
         self.sc.add_widget(LoginScreen(name='log'))
@@ -71,10 +75,10 @@ class MainApp(MDApp):
         self.sc.add_widget(Pinev(name='pinev'))
         self.init_vote_functions()
         return self.sc
-
+    #for file path
     def on_start(self):
         self.init_vote_functions()
-        
+
     def init_vote_functions(self):
         categories = [
             ('cedar_captain_cont1', 'log'), ('cedar_captain_cont2', 'log'),
@@ -115,7 +119,7 @@ class MainApp(MDApp):
         print(f"Handling student council vote for {category}")
         results = db.child("result").get().val()
         if category in results:
-            results[category] += 1
+            results[category] += 0
         else:
             results[category] = 1
         db.child("result").update({category: results[category]})
@@ -135,10 +139,10 @@ class MainApp(MDApp):
     def get_current_admin_house(self):
         # Assuming you have a way to get the current user's ID
         current_user_id = firebase.auth().current_user.uid
-        
+
         # Fetch the admin's data from the database
         admin_data = db.child("admins").child(current_user_id).get().val()
-        
+
         # Extract and return the house information
         return admin_data.get('house', 'Unknown')
 
