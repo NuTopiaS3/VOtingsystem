@@ -23,6 +23,7 @@ config = {
     "messagingSenderId": "1044881782390",
     "appId": "1:1044881782390:web:571667c95213fc7a5f9157"
 }
+
 # Initialize Firebase app
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
@@ -40,13 +41,22 @@ class PrefectgScreen(Screen):
 class StudentScreen(Screen):
     pass
 
-class Maple(Screen):
+class Maplec(Screen):
     pass
 
-class Cedar(Screen):
+class Maplev(Screen):
     pass
 
-class Oak(Screen):
+class Cedarc(Screen):
+    pass
+
+class Cedarv(Screen):
+    pass
+
+class Oakc(Screen):
+    pass
+
+class Oakv(Screen):
     pass
 
 class Pinec(Screen):
@@ -62,15 +72,20 @@ class MainApp(MDApp):
         dir= "C:/Users/Admin/VOtingsystem/Images/"
         fp = os.path.join(dir, fn)
         return fp
+class MainApp(MDApp):
+    current_admin_house = ''
     def build(self):
         self.sc = ScreenManager()
         self.sc.add_widget(LoginScreen(name='log'))
         self.sc.add_widget(PrefectScreen(name='votepb'))
         self.sc.add_widget(PrefectgScreen(name='votepg'))
         self.sc.add_widget(StudentScreen(name='votes'))
-        self.sc.add_widget(Maple(name='maple'))
-        self.sc.add_widget(Cedar(name='cedar'))
-        self.sc.add_widget(Oak(name='oak'))
+        self.sc.add_widget(Maplec(name='maplec'))
+        self.sc.add_widget(Maplev(name='maplev'))
+        self.sc.add_widget(Cedarc(name='cedarc'))
+        self.sc.add_widget(Cedarv(name='cedarv'))
+        self.sc.add_widget(Oakc(name='oakc'))
+        self.sc.add_widget(Oakv(name='oakv'))
         self.sc.add_widget(Pinec(name='pinec'))
         self.sc.add_widget(Pinev(name='pinev'))
         self.init_vote_functions()
@@ -81,12 +96,18 @@ class MainApp(MDApp):
 
     def init_vote_functions(self):
         categories = [
-            ('cedar_captain_cont1', 'log'), ('cedar_captain_cont2', 'log'),
-            ('cedar_captain_cont3', 'log'), ('cedar_captain_cont4', 'log'),
-            ('maple_captain_cont1', 'log'), ('maple_captain_cont2', 'log'),
-            ('maple_captain_cont3', 'log'), ('maple_captain_cont4', 'log'),
-            ('oak_captain_cont1', 'log'), ('oak_captain_cont2', 'log'),
-            ('oak_captain_cont3', 'log'), ('oak_captain_cont4', 'log'),
+            ('cedar_captain_cont1', 'cedarv'), ('cedar_captain_cont2', 'cedarv'),
+            ('cedar_captain_cont3', 'cedarv'), ('cedar_captain_cont4', 'cedarv'),
+            ('cedar_vc_cont1', 'log'), ('cedar_vc_cont2', 'log'),
+            ('cedar_vc_cont3', 'log'), ('cedar_vc_cont4', 'log'),
+            ('maple_captain_cont1', 'maplev'), ('maple_captain_cont2', 'maplev'),
+            ('maple_captain_cont3', 'maplev'), ('maple_captain_cont4', 'maplev'),
+            ('maple_vc_cont1', 'log'), ('maple_vc_cont2', 'log'),
+            ('maple_vc_cont3', 'log'), ('maple_vc_cont4', 'log'),
+            ('oak_captain_cont1', 'oakv'), ('oak_captain_cont2', 'oakv'),
+            ('oak_captain_cont3', 'oakv'), ('oak_captain_cont4', 'oakv'),
+            ('oak_vc_cont1', 'log'), ('oak_vc_cont2', 'log'),
+            ('oak_vc_cont3', 'log'), ('oak_vc_cont4', 'log'),
             ('pine_captain_cont1', 'pinev'), ('pine_captain_cont2', 'pinev'),
             ('pine_captain_cont3', 'pinev'), ('pine_captain_cont4', 'pinev'),
             ('pine_vc_cont1', 'log'), ('pine_vc_cont2', 'log'),
@@ -129,9 +150,9 @@ class MainApp(MDApp):
     def get_next_screen_based_on_house(self):
 
         house_to_screen_mapping = {
-            'Maple': 'maple',  # Assuming you have defined a screen named 'maple_screen'
-            'Cedar': 'cedar',
-            'Oak': 'oak',
+            'Maple': 'maplec',  # Assuming you have defined a screen named 'maple_screen'
+            'Cedar': 'cedarc',
+            'Oak': 'oakc',
             'Pine': 'pinec',
         }
         return house_to_screen_mapping.get(self.current_admin_house, 'default_screen')

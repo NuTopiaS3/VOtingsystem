@@ -87,7 +87,7 @@ class MainApp(MDApp):
 
     def on_start(self):
         self.init_vote_functions()
-        
+
     def init_vote_functions(self):
         categories = [
             ('cedar_captain_cont1', 'log'), ('cedar_captain_cont2', 'log'),
@@ -154,10 +154,10 @@ class MainApp(MDApp):
     def get_current_admin_house(self):
         # Assuming you have a way to get the current user's ID
         current_user_id = firebase.auth().current_user.uid
-        
+
         # Fetch the admin's data from the database
         admin_data = db.child("admins").child(current_user_id).get().val()
-        
+
         # Extract and return the house information
         return admin_data.get('house', 'Unknown')
 
@@ -200,7 +200,7 @@ if __name__ == "__main__":
 
 
 
-
+C:/Users/Admin/VOtingsystem/Images/
 
 
 # Header Sample - #HS
@@ -927,11 +927,3 @@ if __name__ == "__main__":
         disabled: False
         md_bg_color: "#FB313E"
 <Pinev>:
-
-
-
-
-
-
-
-
