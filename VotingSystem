@@ -1,5 +1,6 @@
 import firebase_admin
 from firebase_admin import credentials
+from firebase_admin import initialize_app
 from firebase_admin import db as firebase_db
 from kivy.config import Config
 from kivymd.app import MDApp
@@ -70,6 +71,16 @@ kv1 = "C:/Users/Admin/VOtingsystem/main.kv"
 
 class MainApp(MDApp):
     current_admin_house = ''
+    def __init__(self, **kwargs):
+        super(MainApp, self).__init__(**kwargs)
+        self.initialize_firebase()
+    def initialize_firebase(self):
+        # Path to the service account key JSON file
+        service_account_key_path = "C:\\Users\\Admin\\VOtingsystem\\serviceAccountKey.json"
+
+        # Initialize Firebase with the service account key
+        cred = credentials.Certificate(service_account_key_path)
+        firebase_admin.initialize_app(cred)
 
     def build(self):
         self.sc = ScreenManager()
@@ -124,11 +135,39 @@ class MainApp(MDApp):
                 # For all other votes, use a direct navigation approach
                 setattr(self, category, lambda cat=category, scr=screen, _self=self: _self.update_vote_count_and_navigate(cat, scr))
 
+    def update_vote_count(transaction, category_key):
+        current_count = transaction.get(category_key)
+        if current_count is None:
+            current_count = 0
+        transaction[category_key] = current_count + 1
+        return transaction
+
     def update_vote_count_and_navigate(self, category_key, next_screen):
-        # Directly increment the vote count for the given category in Firebase
-        db.child("result").child(category_key).transaction(lambda current_value: (current_value or 0) + 1)
-        print(f"Updating vote count for {category_key} and navigating to {next_screen}")
-        self.sc.current = next_screen
+        try:
+            # Fetch the current vote count from the database
+            result = db.child("result").get()
+            if result:
+                result = result.val()
+            else:
+                result = {}
+
+            # Update the vote count for the given category
+            if category_key in result:
+                result[category_key] = result[category_key] + 1
+            else:
+                result[category_key] = 1
+
+            # Update the vote count in the database
+            db.child("result").set(result)
+
+            # Print a message indicating the vote count update
+            print(f"Updating vote count for {category_key} and navigating to {next_screen}")
+
+            # Navigate to the next screen
+            self.sc.current = next_screen
+
+        except Exception as e:
+            print(f"Error updating vote count: {e}")
 
     def handle_student_council_vote(self, category):
         # Special handling for student council voting to navigate based on house
