@@ -152,10 +152,8 @@ class MainApp(MDApp):
                 result = {}
 
             # Update the vote count for the given category
-            if category_key in result:
-                result[category_key] = result[category_key] + 1
-            else:
-                result[category_key] = 1
+            current_count = result.get(category_key, 0)
+            result[category_key] = current_count + 1
 
             # Update the vote count in the database
             db.child("result").set(result)
