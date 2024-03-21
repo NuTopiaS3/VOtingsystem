@@ -1,3 +1,6 @@
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import db as firebase_db
 from kivy.config import Config
 from kivymd.app import MDApp
 from kivy.lang import Builder
@@ -67,12 +70,7 @@ kv1 = "C:/Users/Admin/VOtingsystem/main.kv"
 
 class MainApp(MDApp):
     current_admin_house = ''
-    def Bld(fn):
-        dir= "C:/Users/Admin/VOtingsystem/Images/"
-        fp = os.path.join(dir, fn)
-        return fp
-class MainApp(MDApp):
-    current_admin_house = ''
+
     def build(self):
         self.sc = ScreenManager()
         self.sc.add_widget(LoginScreen(name='log'))
@@ -127,10 +125,8 @@ class MainApp(MDApp):
                 setattr(self, category, lambda cat=category, scr=screen, _self=self: _self.update_vote_count_and_navigate(cat, scr))
 
     def update_vote_count_and_navigate(self, category_key, next_screen):
-        # Updates the vote count for the given category and navigates to the specified screen
-        results = db.child("result").get().val()
-        results[category_key] = results.get(category_key, 0) + 1
-        db.child("result").set(results)
+        # Directly increment the vote count for the given category in Firebase
+        db.child("result").child(category_key).transaction(lambda current_value: (current_value or 0) + 1)
         print(f"Updating vote count for {category_key} and navigating to {next_screen}")
         self.sc.current = next_screen
 
