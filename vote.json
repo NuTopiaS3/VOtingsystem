@@ -1,38 +1,38 @@
 {
   "Admin": {
-    "11868": {
-      "ID": 11868,
-      "Name": "11868",
-      "Password": "6942",
-      "House": "Oak",
-      "Voted": false
-    },
-    "11869": {
-      "ID": 11869,
-      "Name": "11869",
-      "Password": "6943",
-      "House": "Pine",
-      "Voted": false
-    },
-    "11870": {
-      "ID": 11870,
-      "Name": "11870",
-      "Password": "6944",
-      "House": "Cedar",
-      "Voted": false
-    },
-    "11871": {
-      "ID": 11871,
-      "Name": "11871",
-      "Password": "6945",
-      "House": "Maple",
-      "Voted": false
-    },
     "1865": {
+      "House": "Oak",
       "ID": 1865,
       "Name": "1865",
       "Password": "6954",
+      "Voted": true
+    },
+    "11868": {
       "House": "Oak",
+      "ID": 11868,
+      "Name": "11868",
+      "Password": "6942",
+      "Voted": true
+    },
+    "11869": {
+      "House": "Pine",
+      "ID": 11869,
+      "Name": "11869",
+      "Password": "6943",
+      "Voted": false
+    },
+    "11870": {
+      "House": "Cedar",
+      "ID": 11870,
+      "Name": "11870",
+      "Password": "6944",
+      "Voted": false
+    },
+    "11871": {
+      "House": "Maple",
+      "ID": 11871,
+      "Name": "11871",
+      "Password": "6945",
       "Voted": false
     }
   },
@@ -41,15 +41,26 @@
     "cedar_captain_cont2": 0,
     "cedar_captain_cont3": 0,
     "cedar_captain_cont4": 0,
+    "cedar_vc_cont1": 0,
+    "cedar_vc_cont2": 0,
+    "cedar_vc_cont3": 0,
+    "cedar_vc_cont4": 0,
     "maple_captain_cont1": 0,
     "maple_captain_cont2": 0,
     "maple_captain_cont3": 0,
     "maple_captain_cont4": 0,
     "maple_vc_cont1": 0,
+    "maple_vc_cont2": 0,
+    "maple_vc_cont3": 0,
+    "maple_vc_cont4": 0,
     "oak_captain_cont1": 0,
     "oak_captain_cont2": 0,
     "oak_captain_cont3": 0,
     "oak_captain_cont4": 0,
+    "oak_vc_cont1": 0,
+    "oak_vc_cont2": 0,
+    "oak_vc_cont3": 0,
+    "oak_vc_cont4": 0,
     "pine_captain_cont1": 0,
     "pine_captain_cont2": 0,
     "pine_captain_cont3": 0,
