@@ -1,17 +1,19 @@
-import firebase_admin
-from firebase_admin import credentials
+from configparser import ConfigParser
+import configparser
 from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen,ScreenManager
 from kivy.animation import Animation
-import pandas
-from openpyxl import Workbook
-import openpyxl
 import os,sys
 from kivy.resources import resource_add_path, resource_find
 from kivy.core.window import Window
 from kivy.uix.floatlayout import FloatLayout
 import pyrebase
+from kivy.config import Config
+from kivymd.uix.textfield import MDTextField
+
+
+
 
 # Firebase configuration
 config = {
@@ -28,6 +30,11 @@ config = {
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 storage = firebase.storage()
+
+
+# Disabling Right Click
+Config.set('input', 'mouse', 'mouse,disable_multitouch')
+
 
 class LoginScreen(Screen):
     pass
@@ -64,9 +71,17 @@ class Pinec(Screen):
 
 class Pinev(Screen):
     pass
-kv1 = Builder.load_file('D:/Gugan/VOting system/main.kv')
+kv1 = "C:/Users/Admin/VOtingsystem/main.kv"
+class CustomTextInput(MDTextField):
+
+    def on_keyboard_down(self, keyboard, keycode, text, modifiers):
+        if keycode[1] not in ['alphanumeric', 'backspace', 'tab']:
+            return True
+        return super().on_keyboard_down(keyboard, keycode, text, modifiers)
+
 
 class MainApp(MDApp):
+
     current_admin_house = ''
     def build(self):
         self.sc = ScreenManager()
@@ -84,22 +99,22 @@ class MainApp(MDApp):
         self.sc.add_widget(Pinev(name='pinev'))
         self.init_vote_functions()
         return self.sc
-
+    #for file path
     def on_start(self):
         self.init_vote_functions()
 
     def init_vote_functions(self):
         categories = [
-            ('cedar_captain_cont1', 'log'), ('cedar_captain_cont2', 'log'),
-            ('cedar_captain_cont3', 'log'), ('cedar_captain_cont4', 'log'),
+            ('cedar_captain_cont1', 'cedarv'), ('cedar_captain_cont2', 'cedarv'),
+            ('cedar_captain_cont3', 'cedarv'), ('cedar_captain_cont4', 'cedarv'),
             ('cedar_vc_cont1', 'log'), ('cedar_vc_cont2', 'log'),
             ('cedar_vc_cont3', 'log'), ('cedar_vc_cont4', 'log'),
-            ('maple_captain_cont1', 'log'), ('maple_captain_cont2', 'log'),
-            ('maple_captain_cont3', 'log'), ('maple_captain_cont4', 'log'),
+            ('maple_captain_cont1', 'maplev'), ('maple_captain_cont2', 'maplev'),
+            ('maple_captain_cont3', 'maplev'), ('maple_captain_cont4', 'maplev'),
             ('maple_vc_cont1', 'log'), ('maple_vc_cont2', 'log'),
             ('maple_vc_cont3', 'log'), ('maple_vc_cont4', 'log'),
-            ('oak_captain_cont1', 'log'), ('oak_captain_cont2', 'log'),
-            ('oak_captain_cont3', 'log'), ('oak_captain_cont4', 'log'),
+            ('oak_captain_cont1', 'oakv'), ('oak_captain_cont2', 'oakv'),
+            ('oak_captain_cont3', 'oakv'), ('oak_captain_cont4', 'oakv'),
             ('oak_vc_cont1', 'log'), ('oak_vc_cont2', 'log'),
             ('oak_vc_cont3', 'log'), ('oak_vc_cont4', 'log'),
             ('pine_captain_cont1', 'pinev'), ('pine_captain_cont2', 'pinev'),
@@ -134,7 +149,7 @@ class MainApp(MDApp):
         print(f"Handling student council vote for {category}")
         results = db.child("result").get().val()
         if category in results:
-            results[category] += 1
+            results[category] += 0
         else:
             results[category] = 1
         db.child("result").update({category: results[category]})
@@ -193,737 +208,3 @@ if __name__ == "__main__":
     except Exception as e:
         print(e)
         input("Press enter.")
-
-
-
-
-
-
-
-C:/Users/Admin/VOtingsystem/Images/
-
-
-# Header Sample - #HS
-#    Label:
-#        text: 'Girl Prefect'
-#        pos_hint: {'center_x':0.5,'center_y':0.88}
-#        font_size: 72
-#        bold: True
-
-<LoginScreen>:
-    name: 'log'
-    canvas:
-        Rectangle:
-            source: 'D:/Gugan/VOtingsystem/Images/bg.jpg'
-            size: self.size
-    MDCard:
-        id:bg
-        md_bg_color: "white"
-        size_hint_x:0.336
-        size_hint_y:0.6
-        pos_hint: {'center_x': 0.5 ,'center_y': 0.5}
-
-    MDTextField:
-        id: user
-        hint_text: 'User Name'
-        size_hint_x: 0.3
-        pos_hint:{'center_x': 0.5 ,'center_y': 0.6}
-        line_color_normal: 0,205/255,1,1
-        hint_text_color_normal: 0,205/255,1,1
-
-    MDTextField:
-        id: passw
-        hint_text: 'Password'
-        helper_text: 'Your Adm No. '
-        size_hint_x: 0.3
-        pos_hint:{'center_x': 0.5 ,'center_y': 0.48}
-        line_color_normal: 0,205/255,1,1
-        hint_text_color_normal: 0,205/255,1,1
-        password: True
-
-    MDRoundFlatButton:
-        text: 'Login'
-        pos_hint:{'center_x': 0.5 ,'center_y': 0.33}
-        size_hint_x: 0.15
-        on_release: app.login(user, passw,error)
-
-    Label:
-        id: error
-        text: ''
-        color: 1,0,0,1
-        pos_hint:{'center_x': 0.5 ,'center_y': 0.27}
-
-
-<PrefectgScreen>:
-    name: 'votepg'
-    canvas:
-        Rectangle:
-            source: 'D:/Gugan/VOtingsystem/Images/gp.jpg'
-            size: self.size
-
-    #HS
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.0875,'center_y':0.38}
-        color:0,0,0,1
-
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.3625,'center_y':0.38}
-        color:0,0,0,1
-
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.6375,'center_y':0.38}
-        color:0,0,0,1
-
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.9125,'center_y':0.38}
-        color:0,0,0,1
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.175
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.0875,'center_y':0.49}
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.175
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.3625,'center_y':0.49}
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.175
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.6375,'center_y':0.49}
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.175
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.9125,'center_y':0.49}
-
-    MDRaisedButton:
-        id: but
-        ##source:
-        text: 'VOTE'
-        pos_hint: {'center_x':0.0875,'center_y':0.331}
-        size_hint_x:0.15
-        on_press: app.prefect_girl_cont1()
-        md_bg_color: "#FB313E"
-
-    MDRaisedButton:
-        id: but1
-        ##source:
-        text: 'VOTE'
-        pos_hint: {'center_x':0.3625,'center_y':0.331}
-        size_hint_x:0.15
-        on_press: app.prefect_girl_cont2()
-        md_bg_color: "#FB313E"
-
-    MDRaisedButton:
-        id: but2
-        text: 'VOTE'
-        pos_hint: {'center_x':0.6375,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.prefect_girl_cont3()
-        disabled: False
-        md_bg_color: "#FB313E"
-
-    MDRaisedButton:
-        id: but2
-        text: 'VOTE'
-        pos_hint: {'center_x':0.9125,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.prefect_girl_cont4()
-        disabled: False
-        md_bg_color: "#FB313E"
-<PrefectScreen>:
-    name: 'votepb'
-    canvas:
-        Rectangle:
-            source: 'D:/Gugan/VOtingsystem/Images/bp.jpg'
-            size: self.size
-
-    #HS
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.18,'center_y':0.38}
-        color:0,0,0,1
-
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.5,'center_y':0.38}
-        color:0,0,0,1
-
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.82,'center_y':0.38}
-        color:0,0,0,1
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.18
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.18,'center_y':0.49}
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.18
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.5,'center_y':0.49}
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.18
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.82,'center_y':0.49}
-
-    MDRaisedButton:
-        id: but
-        text: 'VOTE'
-        pos_hint: {'center_x':0.18,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.prefect_boy_cont1()
-        disabled: False
-        md_bg_color: "#FB313E"
-    MDRaisedButton:
-        id: but1
-        text: 'VOTE'
-        pos_hint: {'center_x':0.5,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.prefect_boy_cont2()
-        disabled: False
-        md_bg_color: "#FB313E"
-    MDRaisedButton:
-        id: but2
-        text: 'VOTE'
-        pos_hint: {'center_x':0.82,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.prefect_boy_cont3()
-        disabled: False
-        md_bg_color: "#FB313E"
-    MDRaisedButton:
-        id: but2
-        text: 'VOTE'
-        pos_hint: {'center_x':0.82,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.prefect_boy_cont4()
-        disabled: False
-        md_bg_color: "#FB313E"
-<StudentScreen>:
-    name: 'votes'
-    canvas:
-        Rectangle:
-            source: 'D:/Gugan/VOtingsystem/Images/scp.jpg'
-            size: self.size
-
-
-    #HS
-
-
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.18,'center_y':0.38}
-        color:0,0,0,1
-
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.5,'center_y':0.38}
-        color:0,0,0,1
-
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.82,'center_y':0.38}
-        color:0,0,0,1
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.18
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.18,'center_y':0.49}
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.18
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.5,'center_y':0.49}
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.18
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.82,'center_y':0.49}
-
-    MDRaisedButton:
-        id: but
-        text: 'VOTE'
-        pos_hint: {'center_x':0.18,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.student_council_cont1()
-        disabled: False
-        md_bg_color: "#FB313E"
-    MDRaisedButton:
-        id: but1
-        text: 'VOTE'
-        pos_hint: {'center_x':0.5,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.student_council_cont2()
-        disabled: False
-        md_bg_color: "#FB313E"
-    MDRaisedButton:
-        id: but2
-        text: 'VOTE'
-        pos_hint: {'center_x':0.82,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.student_council_cont3()
-        disabled: False
-        md_bg_color: "#FB313E"
-<Maplec>:
-    name: 'maple'
-    canvas:
-        Rectangle:
-            source: 'D:/Gugan/VOtingsystem/Images/mc.jpg'
-            size: self.size
-
-    #HS
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.18,'center_y':0.38}
-        color:0,0,0,1
-
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.5,'center_y':0.38}
-        color:0,0,0,1
-
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.82,'center_y':0.38}
-        color:0,0,0,1
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.18
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.18,'center_y':0.49}
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.18
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.5,'center_y':0.49}
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.18
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.82,'center_y':0.49}
-
-    MDRaisedButton:
-        id: but
-        text: 'VOTE'
-        pos_hint: {'center_x':0.18,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.maple_captain_cont1()
-        disabled: False
-        md_bg_color: "#FB313E"
-    MDRaisedButton:
-        id: but1
-        text: 'VOTE'
-        pos_hint: {'center_x':0.5,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.maple_captain_cont2()
-        disabled: False
-        md_bg_color: "#FB313E"
-    MDRaisedButton:
-        id: but2
-        text: 'VOTE'
-        pos_hint: {'center_x':0.82,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.maple_captain_cont3()
-        disabled: False
-        md_bg_color: "#FB313E"
-
-<Maplev>:
-    name: 'maplev'
-    canvas:
-        Rectangle:
-            source: 'D:/Gugan/VOtingsystem/Images/mc.jpg'
-            size: self.size
-
-    #HS
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.18,'center_y':0.38}
-        color:0,0,0,1
-
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.5,'center_y':0.38}
-        color:0,0,0,1
-
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.82,'center_y':0.38}
-        color:0,0,0,1
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.18
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.18,'center_y':0.49}
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.18
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.5,'center_y':0.49}
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.18
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.82,'center_y':0.49}
-
-    MDRaisedButton:
-        id: but
-        text: 'VOTE'
-        pos_hint: {'center_x':0.18,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.maple_vc_cont1()
-        disabled: False
-        md_bg_color: "#FB313E"
-    MDRaisedButton:
-        id: but1
-        text: 'VOTE'
-        pos_hint: {'center_x':0.5,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.maple_vc_cont2()
-        disabled: False
-        md_bg_color: "#FB313E"
-    MDRaisedButton:
-        id: but2
-        text: 'VOTE'
-        pos_hint: {'center_x':0.82,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.maple_vc_cont3()
-        disabled: False
-        md_bg_color: "#FB313E"
-<Cedarc>:
-    name: 'cedarc'
-    canvas:
-        Rectangle:
-            source: 'D:/Gugan/VOtingsystem/Images/cc.jpg'
-            size: self.size
-
-    #HS
-
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.18,'center_y':0.38}
-        color:0,0,0,1
-
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.5,'center_y':0.38}
-        color:0,0,0,1
-
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.82,'center_y':0.38}
-        color:0,0,0,1
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.18
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.18,'center_y':0.49}
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.18
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.5,'center_y':0.49}
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.18
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.82,'center_y':0.49}
-
-    MDRaisedButton:
-        id: but
-        text: 'VOTE'
-        pos_hint: {'center_x':0.18,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.cedar_captain_cont1()
-        disabled: False
-        md_bg_color: "#FB313E"
-    MDRaisedButton:
-        id: but1
-        text: 'VOTE'
-        pos_hint: {'center_x':0.5,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.cedar_captain_cont2()
-        disabled: False
-        md_bg_color: "#FB313E"
-    MDRaisedButton:
-        id: but2
-        text: 'VOTE'
-        pos_hint: {'center_x':0.82,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.cedar_captain_cont3()
-        disabled: False
-        md_bg_color: "#FB313E"
-<Cedarv>:
-    name: 'cedarv'
-    canvas:
-        Rectangle:
-            source: 'D:/Gugan/VOtingsystem/Images/cc.jpg'
-            size: self.size
-
-    #HS
-
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.18,'center_y':0.38}
-        color:0,0,0,1
-
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.5,'center_y':0.38}
-        color:0,0,0,1
-
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.82,'center_y':0.38}
-        color:0,0,0,1
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.18
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.18,'center_y':0.49}
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.18
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.5,'center_y':0.49}
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.18
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.82,'center_y':0.49}
-
-    MDRaisedButton:
-        id: but
-        text: 'VOTE'
-        pos_hint: {'center_x':0.18,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.cedar_vc_cont1()
-        disabled: False
-        md_bg_color: "#FB313E"
-    MDRaisedButton:
-        id: but1
-        text: 'VOTE'
-        pos_hint: {'center_x':0.5,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.cedar_vc_cont2()
-        disabled: False
-        md_bg_color: "#FB313E"
-    MDRaisedButton:
-        id: but2
-        text: 'VOTE'
-        pos_hint: {'center_x':0.82,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.cedar_vc_cont3()
-        disabled: False
-        md_bg_color: "#FB313E"
-<Oakc>:
-
-
-    name: 'oakc'
-    canvas:
-        Rectangle:
-            source: 'D:/Gugan/VOtingsystem/Images/oc.jpg'
-            size: self.size
-
-    #HS
-
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.3033,'center_y':0.38}
-        color:0,0,0,1
-
-
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.6075,'center_y':0.38}
-        color:0,0,0,1
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.18
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.3033,'center_y':0.49}
-
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.18
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.6075,'center_y':0.49}
-
-    MDRaisedButton:
-        id: but
-        text: 'VOTE'
-        pos_hint: {'center_x':0.3033,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.oak_captain_cont1()
-        disabled: False
-        md_bg_color: "#FB313E"
-
-
-
-    MDRaisedButton:
-        id: but2
-        text: 'VOTE'
-        pos_hint: {'center_x':0.6075,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.oak_captain_cont3()
-        disabled: False
-        md_bg_color: "#FB313E"
-
-<Oakv>:
-    name: 'oakv'
-    canvas:
-        Rectangle:
-            source: 'D:/Gugan/VOtingsystem/Images/pvc.jpg'
-            size: self.size
-
-    #HS
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.3033,'center_y':0.38}
-        color:0,0,0,1
-
-
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.6075,'center_y':0.38}
-        color:0,0,0,1
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.18
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.3033,'center_y':0.49}
-
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.18
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.6075,'center_y':0.49}
-
-    MDRaisedButton:
-        id: but
-        text: 'VOTE'
-        pos_hint: {'center_x':0.3033,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.pine_vc_cont1()
-        disabled: False
-        md_bg_color: "#FB313E"
-
-    MDRaisedButton:
-        id: but2
-        text: 'VOTE'
-        pos_hint: {'center_x':0.6075,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.pine_vc_cont2()
-        disabled: False
-        md_bg_color: "#FB313E"
-<Pinec>:
-    name: 'pinec'
-    canvas:
-        Rectangle:
-            source: 'D:/Gugan/VOtingsystem/Images/pc.jpg'
-            size: self.size
-
-    #HS
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.3033,'center_y':0.38}
-        color:0,0,0,1
-
-
-    Label:
-        text:'NAME'
-        pos_hint: {'center_x':0.6075,'center_y':0.38}
-        color:0,0,0,1
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.18
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.3033,'center_y':0.49}
-
-
-    Image:
-        source: 'D:/Gugan/VOtingsystem/Images/img.png'
-        size_hint_x:0.18
-        size_hint_y:0.17
-        pos_hint: {'center_x':0.6075,'center_y':0.49}
-
-    MDRaisedButton:
-        id: but
-        text: 'VOTE'
-        pos_hint: {'center_x':0.3033,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.pine_captain_cont1()
-        disabled: False
-        md_bg_color: "#FB313E"
-
-
-    MDRaisedButton:
-        id: but2
-        text: 'VOTE'
-        pos_hint: {'center_x':0.6075,'center_y':0.331}
-        size_hint_x:0.15
-        opacity: 1
-        on_press: app.pine_captain_cont2()
-        disabled: False
-        md_bg_color: "#FB313E"
-<Pinev>:
