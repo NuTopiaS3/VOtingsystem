@@ -1,4 +1,5 @@
 import firebase_admin
+from firebase_admin import db
 from firebase_admin import credentials
 from firebase_admin import initialize_app
 from firebase_admin import db as firebase_db
@@ -141,31 +142,44 @@ class MainApp(MDApp):
             current_count = 0
         transaction[category_key] = current_count + 1
         return transaction
-
     def update_vote_count_and_navigate(self, category_key, next_screen):
         try:
-            # Fetch the current vote count from the database
-            result = db.child("result").get()
-            if result:
-                result = result.val()
-            else:
-                result = {}
+            success = False
+            while not success:
+                # Step 1: Read the current vote count and version/timestamp
+                result = db.child("result").child(category_key).get().val()
 
-            # Update the vote count for the given category
-            current_count = result.get(category_key, 0)
-            result[category_key] = current_count + 1
+                # Check if result is a dictionary
+                if isinstance(result, dict):
+                    current_count = result.get('count', 0)
+                    current_version = result.get('version', 0)
+                else:
+                    # Handle the case when result is not a dictionary
+                    # You can set default values for current_count and current_version or handle it differently based on your requirements
+                    current_count = 0
+                    current_version = 0
 
-            # Update the vote count in the database
-            db.child("result").set(result)
+                # Step 2: Prepare the updated data
+                new_count = current_count + 1
+                new_version = current_version + 1  # Or use a timestamp or other mechanism
 
-            # Print a message indicating the vote count update
-            print(f"Updating vote count for {category_key} and navigating to {next_screen}")
+                # Step 3: Attempt to update, ensuring version matches
+                update_result = db.child("result").child(category_key).update(
+                    {'count': new_count, 'version': new_version},
+                    {'version': current_version}  # Ensure version matches
+                )
 
-            # Navigate to the next screen
-            self.sc.current = next_screen
-
+                # Check if the update was successful
+                if update_result:
+                    print(f"Updating vote count for {category_key} and navigating to {next_screen}")
+                    self.sc.current = next_screen
+                    success = True
+                else:
+                    print("Version mismatch, retrying...")
         except Exception as e:
-            print(f"Error updating vote count: {e}")
+            print(f"Error updating vote count with optimistic locking: {e}")
+
+
 
     def handle_student_council_vote(self, category):
         # Special handling for student council voting to navigate based on house
