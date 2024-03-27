@@ -71,7 +71,7 @@ kv1 = "D:/Gugan/VOtingsystem/main.kv"
 class MainApp(MDApp):
     current_admin_house = ''
     current_admin_id = None
-
+    categories = None
     def build(self):
         self.sc = ScreenManager()
         self.sc.add_widget(LoginScreen(name='log'))
@@ -95,20 +95,12 @@ class MainApp(MDApp):
         categories = [
             ('cedar_captain_cont1', 'cedarv'), ('cedar_captain_cont2', 'cedarv'),
             ('cedar_captain_cont3', 'cedarv'), ('cedar_captain_cont4', 'cedarv'),
-            ('cedar_vc_cont1', 'log'), ('cedar_vc_cont2', 'log'),
-            ('cedar_vc_cont3', 'log'), ('cedar_vc_cont4', 'log'),
             ('maple_captain_cont1', 'maplev'), ('maple_captain_cont2', 'maplev'),
             ('maple_captain_cont3', 'maplev'), ('maple_captain_cont4', 'maplev'),
-            ('maple_vc_cont1', 'log'), ('maple_vc_cont2', 'log'),
-            ('maple_vc_cont3', 'log'), ('maple_vc_cont4', 'log'),
             ('oak_captain_cont1', 'oakv'), ('oak_captain_cont2', 'oakv'),
             ('oak_captain_cont3', 'oakv'), ('oak_captain_cont4', 'oakv'),
-            ('oak_vc_cont1', 'log'), ('oak_vc_cont2', 'log'),
-            ('oak_vc_cont3', 'log'), ('oak_vc_cont4', 'log'),
             ('pine_captain_cont1', 'pinev'), ('pine_captain_cont2', 'pinev'),
             ('pine_captain_cont3', 'pinev'), ('pine_captain_cont4', 'pinev'),
-            ('pine_vc_cont1', 'log'), ('pine_vc_cont2', 'log'),
-            ('pine_vc_cont3', 'log'), ('pine_vc_cont4', 'log'),
             ('prefect_boy_cont1', 'votepg'), ('prefect_boy_cont2', 'votepg'),
             ('prefect_boy_cont3', 'votepg'), ('prefect_boy_cont4', 'votepg'),
             ('prefect_girl_cont1', 'votes'), ('prefect_girl_cont2', 'votes'),
@@ -116,6 +108,7 @@ class MainApp(MDApp):
             ('student_council_cont1', 'votes'), ('student_council_cont2', 'votes'),
             ('student_council_cont3', 'votes'), ('student_council_cont4', 'votes'),
         ]
+        self.categories = categories  # Assign categories to the class variable
         for category, screen in categories:
             # For student council votes, use handle_student_council_vote
             if 'student_council' in category:
@@ -132,54 +125,86 @@ class MainApp(MDApp):
         if self.current_admin_id:
             db.child("result").child(category).child(self.current_admin_id).set(True)
             print(f"Vote recorded for {category} by {self.current_admin_id}")
-            if 'student_council' in category:
-                next_screen = self.get_next_screen_based_on_house()
-                self.sc.current = next_screen
-                print("Navigating to next screen after student council vote:", next_screen)
-            elif category.startswith('prefect_boy'):
-                # If the vote is for boy prefect, move to the next screen
-                next_screen = 'prefect_girl_cont1'
-                self.sc.current = next_screen
-                print("Navigating to next screen after boy prefect vote:", next_screen)
+
+            if self.categories:
+                # Find the index of the current category in categories list
+                current_index = -1
+                for index, (cat, scr) in enumerate(self.categories):
+                    if cat == category:
+                        current_index = index
+                        break
+
+                # Check if the current category is found in the categories list
+                if current_index != -1 and current_index < len(self.categories) - 1:
+                    next_screen = self.categories[current_index + 1][1]
+                    self.sc.current = next_screen
+                    print("Navigating to next screen after vote:", next_screen)
+                else:
+                    print("Last vote cast. No further navigation required.")
             else:
-                print("Vote recorded but no navigation required for this category.")
+                print("Categories list is not initialized. Cannot determine next screen.")
         else:
             print("User not logged in or ID not set.")
                 
     def handle_student_council_vote(self, category):
         self.cast_vote(category)  # Cast the vote
-        next_screen = self.get_next_screen_based_on_house()  # Get the next screen based on the user's house
-        print("Next screen after student council vote:", next_screen)
-        self.sc.current = next_screen  # Navigate to the next screen
+        try:
+            # Get the next screens based on the user's house
+            house_captain_screen = self.get_house_captain_screen()
+            house_vice_captain_screen = self.get_house_vice_captain_screen()
+            
+            if house_captain_screen:
+                # Navigate to the house captain screen
+                self.sc.current = house_captain_screen
+                print("Navigating to house captain screen:", house_captain_screen)
+            elif house_vice_captain_screen:
+                # If house captain screen not found but vice captain screen found, navigate to vice captain screen
+                self.sc.current = house_vice_captain_screen
+                print("Navigating to house vice captain screen:", house_vice_captain_screen)
+            else:
+                print("Neither house captain nor vice captain screen found.")
+                # If neither house captain nor vice captain screen found, navigate directly to 'log'
+                self.sc.current = 'log'
+        except Exception as e:
+            print("Error determining next screen after student council vote:", str(e))
+            # If any error occurs, navigate to 'log'
+            self.sc.current = 'log'
 
-    def get_next_screen_based_on_house(self):
-        house_to_screen_mapping = {
-            'Maple': 'maplec',
+    def get_house_captain_screen(self):
+        house_to_captain_screen_mapping = {
             'Cedar': 'cedarc',
+            'Maple': 'maplec',
             'Oak': 'oakc',
             'Pine': 'pinec',
         }
-        house = self.get_current_admin_house()
-        print("Current admin house in get_next_screen_based_on_house:", house)
-        next_screen = house_to_screen_mapping.get(house, 'log')
-        print("Next screen:", next_screen)
-        return next_screen
-    
-    def get_current_admin_house(self):
-        current_user = firebase.auth().get_account_info(firebase.auth().current_user['idToken'])
-        admin_data = db.child("admins").child(current_user['users'][0]['localId']).get().val() or {}
-        return admin_data.get('house', 'Unknown')
+        current_house = self.get_current_user_house()  # Assuming you have a method to get the current user's house
+        return house_to_captain_screen_mapping.get(current_house)
+
+    def get_house_vice_captain_screen(self):
+        house_to_vice_captain_screen_mapping = {
+            'Cedar': 'cedarv',
+            'Maple': 'maplev',
+            'Oak': 'oakv',
+            'Pine': 'pinev',
+        }
+        current_house = self.get_current_user_house()  # Assuming you have a method to get the current user's house
+        return house_to_vice_captain_screen_mapping.get(current_house)
+
+    def get_current_user_house(self):
+        return self.current_admin_house
 
     def login(self, user, passw, error):
-        # Adjusted login function to store current_admin_id
         admins = db.child("Admin").get().val() or {}
         for admin_id, admin_data in admins.items():
             if admin_data.get("ID") == user.text and admin_data.get("Password") == passw.text:
                 if not admin_data.get("Voted", False):
-                    self.current_admin_id = admin_id  # Storing the admin ID
+                    # Export user ID and house information
+                    self.current_admin_id = admin_id
                     self.current_admin_house = admin_data["House"]
+                    
+                    # Update voted status and navigate to voting page
                     db.child("Admin").child(admin_id).update({"Voted": True})
-                    self.sc.current = 'votepb'  # Navigate to the voting page
+                    self.sc.current = 'votepb'
                     print("Login Successful")
                     return
                 else:
